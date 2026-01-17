@@ -103,4 +103,4 @@ The `mqtt_pend_coupl.py` script runs on every frame change (`frame_change_post`)
 }
 ```
 
-<img src="mqtt_pendules.png" alt="MQTT Visualization" width="400">
+<img src="mqtt_pendules.png" alt="MQTT Visualization" width="600">
