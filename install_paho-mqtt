@@ -1,0 +1,43 @@
+import sys
+import subprocess
+import os
+import bpy
+
+def install_package(package_name):
+    print(f"Tentative d'installation de {package_name}...")
+    
+    # Chemin vers l'exécutable Python de Blender
+    # Sur Windows, c'est généralement dans .../python/bin/python.exe
+    python_exe = os.path.join(sys.exec_prefix, 'bin', 'python.exe')
+    
+    if not os.path.exists(python_exe):
+        # Fallback si le chemin standard échoue
+        python_exe = sys.executable 
+        print(f"Attention: Exécutable Python dédié non trouvé. Utilisation de: {python_exe}")
+
+    print(f"Utilisation de l'exécutable Python : {python_exe}")
+
+    # Commande pour installer pip si nécessaire (normalement déjà présent)
+    try:
+        subprocess.call([python_exe, "-m", "ensurepip", "--default-pip"])
+    except Exception as e:
+        print(f"Erreur lors de ensurepip: {e}")
+
+    # Commande d'installation
+    cmd = [python_exe, "-m", "pip", "install", package_name]
+    
+    try:
+        # Exécution de pip
+        subprocess.check_call(cmd)
+        print(f"\nSUCCÈS : '{package_name}' a été installé correctement.")
+        print("Veuillez REDÉMARRER Blender pour que les changements prennent effet.")
+    except subprocess.CalledProcessError as e:
+        print(f"\nERREUR : Impossible d'installer '{package_name}'.")
+        print(f"Code retour : {e.returncode}")
+    except Exception as e:
+        print(f"\nERREUR inattendue : {e}")
+
+if __name__ == "__main__":
+    # Nettoie la console système pour voir le résultat
+    os.system('cls' if os.name == 'nt' else 'clear')
+    install_package("paho-mqtt")
