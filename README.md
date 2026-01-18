@@ -16,11 +16,12 @@ This scene simulates a single simple pendulum oscillating around an axis.
 
 ### Simple Scene Structure (Outliner)
 
-Based on the scene organization:
+The system is grouped under a parent object `sys_pendule`:
 
-* **Axe**: Contains the `Cylinder` mesh, serves as the fixed support.
-* **Pendule**: Contains `Sphere.001`, this is the moving physical object (Rigid Body).
-* **Pivot**: Object serving as the rotation point.
+* **sys_pendule**: Main container.
+  * **Axe**: Contains the `Cylinder` mesh, serves as the fixed support.
+  * **Pendule**: Contains `Sphere.001`, this is the moving physical object (Rigid Body).
+  * **Pivot**: Object serving as the rotation point.
 
 ---
 
@@ -38,31 +39,24 @@ This scene simulates two physical pendulums coupled by a torsion spring. The ang
 
 ### Coupled Scene Structure (Outliner)
 
-The organization of objects in the scene is as follows:
+The scene contains the following key objects:
 
-#### The Pendulums (Rigid Bodies)
-
-* **Pendule1**: The first oscillator (contains the Sphere1 mesh).
-* **Pendule2**: The second oscillator (contains the Sphere2 mesh).
-  * Note: Both objects must have an identical mass to observe consistent beats.
-
-#### The Mounts (Hinges)
-
-These "Empty" objects serve as fixed pivot points.
-
-* **Hinge1**: Rigid Body > Hinge constraint. Connects Pendule1 to the "world" (fixed).
-* **Hinge2**: Rigid Body > Hinge constraint. Connects Pendule2 to the "world" (fixed).
+* **Axe**: Fixed support structure.
+* **couplage**: "Empty" object carrying the **Generic Spring** constraint. This ensures the energy transfer between the two pendulums.
+* **Hinge1**: "Empty" object using a **Hinge** constraint. It connects Pendule1 to the fixed world.
+* **Hinge2**: "Empty" object using a **Hinge** constraint. It connects Pendule2 to the fixed world.
+* **Pendule1**: The first oscillator (Rigid Body).
+* **Pendule2**: The second oscillator (Rigid Body).
 
 #### The Coupling (Torsion Spring)
 
 This element ensures the energy transfer between the two pendulums.
 
-* **couplage**: "Empty" object carrying the Generic Spring constraint.
-  * **Configuration:**
-    * **Objects:** Connects Pendule1 and Pendule2.
-    * **Angular X:** Stiffness enabled.
-    * **Linear:** All disabled (Free).
-    * **Collisions:** "Disable Collisions" option checked (Essential).
+* **Configuration:**
+  * **Objects:** Connects Pendule1 and Pendule2.
+  * **Angular X:** Stiffness enabled.
+  * **Linear:** All disabled (Free).
+  * **Collisions:** "Disable Collisions" option checked (Essential).
 
 ### Physical Settings
 
